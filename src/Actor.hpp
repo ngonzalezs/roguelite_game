@@ -1,5 +1,7 @@
 #include "libtcod.hpp"
 
+#ifndef ROGUELITE_ACTOR
+#define ROGUELITE_ACTOR
 
 class Actor {
 public :
