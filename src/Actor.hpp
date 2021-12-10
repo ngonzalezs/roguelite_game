@@ -13,4 +13,5 @@ public :
    void render() const;
 };
 
+#endif ROGUELITE_ACTOR
 

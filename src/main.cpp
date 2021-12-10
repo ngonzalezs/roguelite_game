@@ -20,10 +20,18 @@ int main() {
            break;
            case TCODK_DOWN :
            if(!map.isWall(player.x,player.y-1)){
-              player.y--;
-           }/*player.y++*/; break;
-           case TCODK_LEFT : player.x--; break;
-           case TCODK_RIGHT : player.x++; break;
+              player.y++;
+           }; break;
+           case TCODK_LEFT :
+           if(!map.isWall(player.x,player.y-1)){
+              player.x--;
+           }
+           break;
+           case TCODK_RIGHT :
+            if(!map.isWall(player.x,player.y-1)){
+              player.x++;
+            }
+            break;
            default:break;
        }
        TCODConsole::root->clear();

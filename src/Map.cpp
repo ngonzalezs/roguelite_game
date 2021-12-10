@@ -6,8 +6,26 @@ Map::Map(int width, int height): width(width), height(height){
   tiles = new Tile[width*height];
 
   //Hacer todo el borde como pared
-  setWall(0,0);
-  setWall(0,1);
+
+  for (int i = 0; i < width; i++)
+  {
+    tiles[i+0*width].canWalk = false;
+  }
+
+  for (int i = 0; i < height; i++)
+  {
+    tiles[0+i*width].canWalk = false;
+  }
+
+    for (int i = 0; i < width; i++)
+  {
+    tiles[i+(height-1)*width].canWalk = false;
+  }
+
+  for (int i = 0; i < height; i++)
+  {
+    tiles[(width-1)+i*width].canWalk = false;
+  }
 
 }
 
