@@ -7,26 +7,17 @@ Map::Map(int width, int height): width(width), height(height){
 
   //Hacer todo el borde como pared
 
-  for (int i = 0; i < width; i++)
+  for (int x = 0; x < width; x++)
   {
-    tiles[i+0*width].canWalk = false;
+    setWall(x,0);
+    setWall(x,height-1);
   }
 
-  for (int i = 0; i < height; i++)
+  for (int y = 0; y < height; y++)
   {
-    tiles[0+i*width].canWalk = false;
+    setWall(0,y);
+    setWall(width-1,y);
   }
-
-    for (int i = 0; i < width; i++)
-  {
-    tiles[i+(height-1)*width].canWalk = false;
-  }
-
-  for (int i = 0; i < height; i++)
-  {
-    tiles[(width-1)+i*width].canWalk = false;
-  }
-
 }
 
 Map::~Map(){
@@ -42,14 +33,13 @@ void Map::render() const{
   static const TCODColor darkGround(50,50,150);
   //Si es pared lo renderizo de este otro:
   static const TCODColor darkWall(0,0,100);
-
-
   for (int i = 0; i < width; i++)
   {
     for (int j = 0; j < height; j++)
     {
       if(isWall(i,j)){
          TCODConsole::root->setCharBackground(i,j,darkWall);
+
       }else{
          TCODConsole::root->setCharBackground(i,j,darkGround);
       }
@@ -60,3 +50,19 @@ void Map::setWall(int x, int y){
   //Ir a ese tile y ponerlo como no walkable
   tiles[x+y*width].canWalk  = false;
 };
+
+void Map::dig(int x_inicial, int y_inicial, int x_final, int y_final){
+   for (int i = x_inicial; i < x_final; i++)
+    {
+    for (int j = y_inicial; j < y_final; j++)
+    {
+      tiles[i+j*width].canWalk  = true;
+    }
+   }
+}
+
+void Map::createRoom(bool first, int x1, int y1, int x2, int y2){
+
+}
+
+

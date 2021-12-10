@@ -1,7 +1,6 @@
 #include "libtcod.hpp"
 
-#ifndef ROGUELITE_ACTOR
-#define ROGUELITE_ACTOR
+#pragma once
 
 class Actor {
 public :
@@ -13,5 +12,4 @@ public :
    void render() const;
 };
 
-#endif ROGUELITE_ACTOR
 
