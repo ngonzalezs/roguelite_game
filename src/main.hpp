@@ -7,6 +7,7 @@ class Actor;
 #include "Attacker.hpp"
 #include "Ai.hpp"
 #include "Actor.hpp"
+#include "Gui.hpp"
 #include "Map.hpp"
 #include "Engine.hpp"
 

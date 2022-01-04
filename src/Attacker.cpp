@@ -9,12 +9,22 @@ void Attacker::attack(Actor *owner, Actor *target) {
      //Pintamos los logs de mensajes (cuestionable que sea aquí)
       if ( this->power - target->destructible->defense > 0 ) { //Si se hace algo de daño_
           int danioInflingido = this->power - target->destructible->defense;
+
           std::cout<<owner->name<<" ataca exitosamente a "<<target->name<<", restándo "<<danioInflingido<<std::endl;
+
+          engine.gui->message(owner==engine.player ? TCODColor::red : TCODColor::lightGrey,
+          "%s ataca exitosamente a %s restando %g.", owner->name.c_str(), target->name.c_str(),
+          power - target->destructible->defense);
+
       } else {
           std::cout<<owner->name<<" ataca sin éxito a "<<target->name<<std::endl;
+          engine.gui->message(TCODColor::lightGrey,
+          "%s ataca %s sin exito a !", owner->name.c_str(), target->name.c_str());
       }
       target->destructible->takeDamage(target,this->power);
    } else {
       std::cout<<owner->name<<" no puede atacar a  "<<target->name<<std::endl;
+      engine.gui->message(TCODColor::lightGrey,
+      "%s no puede atacar a %s",owner->name.c_str(),target->name.c_str());
    }
 }

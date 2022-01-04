@@ -11,14 +11,18 @@ Engine::Engine(int screenWidth, int screenHeight): fovRadius(FOVRADIOUS_INICIAL)
   player->ai = new PlayerAi();
   actors.push(player);
 
-
-
   map = new Map(ANCHO_MAPA, ALTO_MAPA);
+  gui = new Gui();
+  gui->message(TCODColor::red,
+    	"Bienvenid@ a la mazmorra de las tinieblas!!");
+  gui->message(TCODColor::red,
+    	"Sobrevive si puedes >:D");
   map->computeFov();
 }
 
 Engine::~Engine( ){
   delete map;
+  delete gui;
   actors.clearAndDelete();
 }
 
@@ -64,8 +68,9 @@ void Engine::render(){
   player->render();
 
   //Renderizamos la GUI:
-  TCODConsole::root->print(1,screenHeight-2, "HP(%s) : %d/%d",player->name.c_str(),(int)player->destructible->hp,(int)player->destructible->maxHp);
+  gui->render();
   TCODConsole::flush();
+
 }
 
 
