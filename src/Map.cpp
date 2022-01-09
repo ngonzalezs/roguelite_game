@@ -163,14 +163,20 @@ void Map::addMonster(int x, int y){
   int aleatorioMostruo = rng->getInt(0, 5);
 
   if(aleatorioMostruo == 0){
-
     Actor* troll = new Actor(x, y, 'T', "Troll", TCODColor::darkerGreen);
     troll->destructible = new MonsterDestructible(16, 1,"Troll muerto");
     troll->attacker = new Attacker(4);
     troll->ai = new MonsterAi();
     engine.actors.push(troll);
-  } else{
-
+  }
+  if(aleatorioMostruo == 2){
+    Actor* duende = new Actor(x, y, 'D', "Duende", TCODColor::lighterLime);
+    duende->destructible = new MonsterDestructible(5,2,"Duende muerto");
+    duende->attacker = new Attacker(1);
+    duende->ai = new MonsterAi();
+    engine.actors.push(duende);
+  }
+  else{
     Actor* ogro = new Actor(x, y, 'O', "Ogro", TCODColor::desaturatedGreen);
     ogro->destructible = new MonsterDestructible(10,0,"Ogro muerto");
     ogro->attacker = new Attacker(3);
