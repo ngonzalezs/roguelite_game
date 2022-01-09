@@ -19,7 +19,7 @@ void Attacker::attack(Actor *owner, Actor *target) {
       } else {
           std::cout<<owner->name<<" ataca sin éxito a "<<target->name<<std::endl;
           engine.gui->message(TCODColor::lightGrey,
-          "%s ataca %s sin exito a !", owner->name.c_str(), target->name.c_str());
+          "%s ataca sin exito a %s!", owner->name.c_str(), target->name.c_str());
       }
       target->destructible->takeDamage(target,this->power);
    } else {

@@ -38,7 +38,7 @@ void Gui::render() {
     // renderizamos la interfaz del raton
     renderMouseLook();
 
-   // Partomos el GUI en la consola raiz
+   // Partimos el GUI en la consola raiz
    TCODConsole::blit(con,0,0,engine.screenWidth,PANEL_HEIGHT,
    TCODConsole::root,0,engine.screenHeight-PANEL_HEIGHT);
 }
@@ -114,7 +114,7 @@ void Gui::renderMouseLook() {
 	bool first=true;
 	for (Actor **it=engine.actors.begin(); it != engine.actors.end(); it++) {
 		Actor *actor=*it;
-		// find actors under the mouse cursor
+		// Buscamos los actores
 		if (actor->x == engine.mouse.cx && actor->y == engine.mouse.cy ) {
 			if (! first) {
 				strcat(buf,", ");
@@ -124,7 +124,7 @@ void Gui::renderMouseLook() {
 			strcat(buf,actor->name.c_str());
 		}
 	}
-	  // display the list of actors under the mouse cursor
+	  // Pintamos la lista de la lista debajo del cursor
 	  con->setDefaultForeground(TCODColor::lighterPurple);
 	  con->print(1,0,buf);
 }
