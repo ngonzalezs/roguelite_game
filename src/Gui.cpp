@@ -14,7 +14,7 @@ Gui::~Gui() {
 }
 
 void Gui::render() {
-   // clear the GUI console
+   // Limpiamos la consola
    con->setDefaultBackground(TCODColor::black);
    con->clear();
 
@@ -22,7 +22,7 @@ void Gui::render() {
    engine.player->destructible->maxHp,
    TCODColor::lightRed,TCODColor::darkerRed);
 
-   // draw the message log
+   // Escribimos el mensaje en el log
 	 int y=1;
 	 float colorCoef=0.4f;
 	 for (Message **it=log.begin(); it != log.end(); it++) {
@@ -35,8 +35,10 @@ void Gui::render() {
 		  }
 	  }
 
+    // renderizamos la interfaz del raton
+    renderMouseLook();
 
-   // blit the GUI console on the root console
+   // Partomos el GUI en la consola raiz
    TCODConsole::blit(con,0,0,engine.screenWidth,PANEL_HEIGHT,
    TCODConsole::root,0,engine.screenHeight-PANEL_HEIGHT);
 }
@@ -45,18 +47,18 @@ void Gui::renderBar(int x, int y, int width, const char *name,
     float value, float maxValue, const TCODColor &barColor,
     const TCODColor &backColor) {
 
-    // fill the background
+    // Rellenamos el fondo
     con->setDefaultBackground(backColor);
     con->rect(x,y,width,1,false,TCOD_BKGND_SET);
 
     int barWidth = (int)(value / maxValue * width);
     if ( barWidth > 0 ) {
-      // draw the bar
+      // Pintamos la barra
       con->setDefaultBackground(barColor);
       con->rect(x,y,barWidth,1,false,TCOD_BKGND_SET);
     }
 
-     // print text on top of the bar
+     // Escribimos por encima de la barra
       con->setDefaultForeground(TCODColor::white);
       con->printEx(x+width/2,y,TCOD_BKGND_NONE,TCOD_CENTER,
       "%s : %g/%g", name, value, maxValue);
@@ -71,7 +73,6 @@ Gui::Message::~Message() {
 }
 
 void Gui::message(const TCODColor &col, const char *text, ...) {
-	// build the text
 	va_list ap;
 	char buf[128];
 	va_start(ap,text);
@@ -81,27 +82,53 @@ void Gui::message(const TCODColor &col, const char *text, ...) {
 	char *lineBegin=buf;
 	char *lineEnd;
 	do {
-		// make room for the new message
+		// Hacemos un espacio para el texto
 		if ( log.size() == MSG_HEIGHT ) {
 			Message *toRemove=log.get(0);
 			log.remove(toRemove);
 			delete toRemove;
 		}
 
-		// detect end of the line
+		// Checkeamos si estamos en la linea final
 		lineEnd=strchr(lineBegin,'\n');
 		if ( lineEnd ) {
 			*lineEnd='\0';
 		}
 
-		// add a new message to the log
+		// Añadimos un mensaje nuevo al log
 		Message *msg=new Message(lineBegin, col);
 		log.push(msg);
 
-		// go to next line
+		// Vamos a la siguiente linea
 		lineBegin=lineEnd+1;
 	} while ( lineEnd );
 }
+
+void Gui::renderMouseLook() {
+  if (! engine.map->isInFov(engine.mouse.cx, engine.mouse.cy)) {
+      // Si el raton esta fuera del fov no se renderiza
+      return;
+	}
+
+	char buf[128]="";
+	bool first=true;
+	for (Actor **it=engine.actors.begin(); it != engine.actors.end(); it++) {
+		Actor *actor=*it;
+		// find actors under the mouse cursor
+		if (actor->x == engine.mouse.cx && actor->y == engine.mouse.cy ) {
+			if (! first) {
+				strcat(buf,", ");
+			} else {
+				first=false;
+			}
+			strcat(buf,actor->name.c_str());
+		}
+	}
+	  // display the list of actors under the mouse cursor
+	  con->setDefaultForeground(TCODColor::lighterPurple);
+	  con->print(1,0,buf);
+}
+
 
 
 

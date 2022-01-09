@@ -123,6 +123,11 @@ void Map::createRoom(bool first, int x1, int y1, int x2, int y2){
 
 
 bool Map::isInFov(int x, int y) const{
+
+  if ( x < 0 || x >= width || y < 0 || y >= height ) {
+      return false;
+  }
+
   if(map->isInFov(x,y)){
     tiles[x+y*width].explored = true;
     return true;
